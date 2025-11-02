@@ -1,21 +1,26 @@
 import "./App.css";
-import Counter from "./Counter";
-import Form from "./Form";
-import Greetings from "./Greetings";
-import ParentComponent from "./ParentComponent";
-import ThemeToggle from "./ThemeToggle";
+import axios from "axios";
+import SearchForm from "./SearchForm";
+import { useState } from "react";
+import type { Article } from "../types/article";
+import ArticleList from "./ArticleList";
 
 function App() {
+  const [articles, setArticles] = useState<Article[]>([]);
+
+  const handleSearch = async (topic: string) => {
+    const response = await axios.get<ArticleHttpResponse>(
+      `https://hn.algolia.com/api/v1/search?query=${topic}`
+    );
+    setArticles(response.data.hits);
+  };
+
   return (
     <>
-      <h1 className="page-header">Props from Zero to Hero</h1>
-      <Greetings name="Simon" surname="Tomson" />
-      <Greetings name="Sandi" />
-      <Greetings name="Jessy" />
-      <ThemeToggle />
-      <Form />
-      <Counter />
-      <ParentComponent />
+      <h1 className="page-header">Find the article :</h1>
+
+      <SearchForm onSubmit={handleSearch} />
+      {articles.length > 0 && <ArticleList items={articles} />}
     </>
   );
 }
