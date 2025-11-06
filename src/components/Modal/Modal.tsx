@@ -4,9 +4,10 @@ import { useEffect } from "react";
 
 interface ModalProps {
   onClose: () => void;
+  children: React.ReactNode;
 }
 
-export default function Modal({ onClose }: ModalProps) {
+export default function Modal({ onClose, children }: ModalProps) {
   const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
       onClose();
@@ -20,8 +21,10 @@ export default function Modal({ onClose }: ModalProps) {
       }
     };
     document.addEventListener("keydown", handleKeyDown);
+    document.body.style.overflow = "hidden";
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
     };
   }, [onClose]);
 
@@ -40,8 +43,7 @@ export default function Modal({ onClose }: ModalProps) {
         >
           &times;
         </button>
-        <h2>Modal Title</h2>
-        <p>This is some content inside the modal.</p>
+        {children}
       </div>
     </div>,
     document.body
