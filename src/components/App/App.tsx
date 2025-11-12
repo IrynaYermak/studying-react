@@ -1,13 +1,14 @@
 import "./App.css";
 // import axios from "axios";
-import { useQuery, keepPreviousData } from "@tanstack/react-query";
-import SearchForm from "../Form/SearchForm";
-import { useState } from "react";
+// import { useQuery, keepPreviousData } from "@tanstack/react-query";
+// import SearchForm from "../Form/SearchForm";
+// import { useState } from "react";
 // import { useEffect } from "react";
 // import type { Article } from "../types/article";
-import ArticleList from "../ArticleList";
-import { fetchArticles } from "../../services/articleService";
-import ReactPaginate from "react-paginate";
+// import ArticleList from "../ArticleList";
+// import { fetchArticles } from "../../services/articleService";
+// import ReactPaginate from "react-paginate";
+import OrderFormFormik from "../Form/OrderFormFormik";
 // import Timer from "../Timer";
 // import Modal from "../Modal/Modal";
 
@@ -79,54 +80,54 @@ import ReactPaginate from "react-paginate";
 
 // import { useQuery } from "@tanstack/react-query";
 
-function App() {
-  // const [count, setCount] = useState(1);
-  // const [characterId, setCharacterId] = useState("");
+// function App() {
+// const [count, setCount] = useState(1);
+// const [characterId, setCharacterId] = useState("");
 
-  // const { data, isLoading, isError, error } = useQuery({
-  //   queryKey: ["person", characterId],
-  //   queryFn: () => fetchPerson(characterId),
-  //   enabled: characterId !== "",
-  // });
+// const { data, isLoading, isError, error } = useQuery({
+//   queryKey: ["person", characterId],
+//   queryFn: () => fetchPerson(characterId),
+//   enabled: characterId !== "",
+// });
 
-  const [topic, setTopic] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const { isLoading, isError, data, error, isSuccess } = useQuery({
-    queryKey: ["articles", topic, currentPage],
-    queryFn: () => fetchArticles(topic, currentPage),
-    enabled: topic !== "",
-    placeholderData: keepPreviousData,
-  });
+//   const [topic, setTopic] = useState("");
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const { isLoading, isError, data, error, isSuccess } = useQuery({
+//     queryKey: ["articles", topic, currentPage],
+//     queryFn: () => fetchArticles(topic, currentPage),
+//     enabled: topic !== "",
+//     placeholderData: keepPreviousData,
+//   });
 
-  const handleSearch = async (newTopic: string) => {
-    setTopic(newTopic);
-    setCurrentPage(1);
-  };
-  const totalPages = data?.nbPages ?? 0;
+//   const handleSearch = async (newTopic: string) => {
+//     setTopic(newTopic);
+//     setCurrentPage(1);
+//   };
+//   const totalPages = data?.nbPages ?? 0;
 
-  return (
-    <>
-      <SearchForm onSubmit={handleSearch} />
-      {isSuccess && totalPages > 1 && (
-        <ReactPaginate
-          pageCount={totalPages}
-          pageRangeDisplayed={2}
-          marginPagesDisplayed={3}
-          onPageChange={({ selected }) => setCurrentPage(selected + 1)}
-          forcePage={currentPage - 1}
-          // containerClassName={css.pagination}
-          // activeClassName={css.active}
-          nextLabel="→"
-          previousLabel="←"
-        />
-      )}
+//   return (
+//     <>
+//       <SearchForm onSubmit={handleSearch} />
+//       {isSuccess && totalPages > 1 && (
+//         <ReactPaginate
+//           pageCount={totalPages}
+//           pageRangeDisplayed={2}
+//           marginPagesDisplayed={3}
+//           onPageChange={({ selected }) => setCurrentPage(selected + 1)}
+//           forcePage={currentPage - 1}
+//           // containerClassName={css.pagination}
+//           // activeClassName={css.active}
+//           nextLabel="→"
+//           previousLabel="←"
+//         />
+//       )}
 
-      {isLoading && <p>Loading...</p>}
-      {isError && <p>Oops,an error occured: {error.message}</p>}
-      {data && data.hits.length > 0 && <ArticleList items={data.hits} />}
-    </>
-  );
-}
+//       {isLoading && <p>Loading...</p>}
+//       {isError && <p>Oops,an error occured: {error.message}</p>}
+//       {data && data.hits.length > 0 && <ArticleList items={data.hits} />}
+//     </>
+//   );
+// }
 
 // _______________strict mode___________________________
 
@@ -184,7 +185,7 @@ function App() {
 //   );
 // }
 // -----------------------------------------------
-export default App;
+// export default App;
 
 {
   /* -----------pagination--------------- */
@@ -205,4 +206,9 @@ export default App;
       >
         Next
       </button> */
+}
+// -------------------formik study---------------
+
+export default function App() {
+  return <OrderFormFormik />;
 }
